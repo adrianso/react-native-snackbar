@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -104,6 +107,9 @@ public class SnackbarModule extends ReactContextBaseJavaModule {
         int duration = getOptionValue(options, "duration", Snackbar.LENGTH_SHORT);
         int textColor = getOptionValue(options, "textColor", Color.WHITE);
         boolean rtl = getOptionValue(options, "rtl", false);
+        int left = getOptionValue(options, "left", 0);
+        int right = getOptionValue(options, "right", 0);
+        int bottom = getOptionValue(options, "bottom", 0);
         String fontFamily = getOptionValue(options, "fontFamily", null);
         Typeface font = null;
         if (fontFamily != null) {
@@ -129,6 +135,14 @@ public class SnackbarModule extends ReactContextBaseJavaModule {
             snackbarView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             snackbarView.setTextDirection(View.TEXT_DIRECTION_RTL);
         }
+
+        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
+        param.setMargins(
+                (int)convertDpToPixel(left ,snackbarView.getContext()),
+                0,
+                (int)convertDpToPixel(right ,snackbarView.getContext()),
+                (int)convertDpToPixel(bottom ,snackbarView.getContext()));
+        snackbarView.setLayoutParams(param);        
 
         TextView snackbarText = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
         snackbarText.setTextColor(textColor);
@@ -203,5 +217,9 @@ public class SnackbarModule extends ReactContextBaseJavaModule {
     private boolean getOptionValue(ReadableMap options, String key, boolean fallback) {
         return options.hasKey(key) ? options.getBoolean(key) : fallback;
     }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }    
 
 }

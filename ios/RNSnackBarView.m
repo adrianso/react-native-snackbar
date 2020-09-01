@@ -181,11 +181,11 @@ static const NSTimeInterval ANIMATION_DURATION = 0.250;
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     [keyWindow addSubview:self];
     [self setTranslatesAutoresizingMaskIntoConstraints:false];
-    [keyWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[self(>=48)]|"
+    [keyWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%f-[self]-%f-|", self.left, self.right]
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"self" : self}]];
-    [keyWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
+    [keyWindow addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[self]-%f-|", self.bottom]
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"self" : self}]];
@@ -258,6 +258,15 @@ static const NSTimeInterval ANIMATION_DURATION = 0.250;
 
     self.text = _pendingOptions[@"text"];
     self.callback = _pendingCallback;
+
+    id left = _pendingOptions[@"left"];
+    self.left = left ? [left floatValue] : 0;
+
+    id right = _pendingOptions[@"right"];
+    self.right = right ? [right floatValue] : 0;
+
+    id bottom = _pendingOptions[@"bottom"];
+    self.bottom = bottom ? [bottom floatValue] : 0;
 
     NSDictionary *action = _pendingOptions[@"action"];
     if (action) {

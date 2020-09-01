@@ -20,7 +20,7 @@ and when to use them.
 
 ```js
 Snackbar.show({
-  text: 'Hello world',
+  text: "Hello world",
   duration: Snackbar.LENGTH_SHORT,
 });
 ```
@@ -29,12 +29,14 @@ Or, to include an action button:
 
 ```js
 Snackbar.show({
-  text: 'Hello world',
+  text: "Hello world",
   duration: Snackbar.LENGTH_INDEFINITE,
   action: {
-    text: 'UNDO',
-    textColor: 'green',
-    onPress: () => { /* Do something. */ },
+    text: "UNDO",
+    textColor: "green",
+    onPress: () => {
+      /* Do something. */
+    },
   },
 });
 ```
@@ -42,20 +44,22 @@ Snackbar.show({
 ## Installation
 
 1. Install:
-    - Using [npm](https://www.npmjs.com/#getting-started): `npm install react-native-snackbar --save`
-    - Using [Yarn](https://yarnpkg.com/): `yarn add react-native-snackbar`
+
+   - Using [npm](https://www.npmjs.com/#getting-started): `npm install react-native-snackbar --save`
+   - Using [Yarn](https://yarnpkg.com/): `yarn add react-native-snackbar`
 
 2. [Link](https://facebook.github.io/react-native/docs/linking-libraries-ios.html):
-    - RN >= 0.60 supports [autolinking](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md): first `cd ios && pod install && cd ..`
-    - RN < 0.60: `react-native link react-native-snackbar`
-    - Or if that fails, link manually using [these steps](https://github.com/cooperka/react-native-snackbar/wiki/Manual-Installation)
-    - Note that because this is a native module, Expo does not support it -- to use with Expo you need to [eject to ExpoKit](https://docs.expo.io/versions/latest/expokit/eject/)
+
+   - RN >= 0.60 supports [autolinking](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md): first `cd ios && pod install && cd ..`
+   - RN < 0.60: `react-native link react-native-snackbar`
+   - Or if that fails, link manually using [these steps](https://github.com/cooperka/react-native-snackbar/wiki/Manual-Installation)
+   - Note that because this is a native module, Expo does not support it -- to use with Expo you need to [eject to ExpoKit](https://docs.expo.io/versions/latest/expokit/eject/)
 
 3. Import it in your JS:
 
-    ```js
-    import Snackbar from 'react-native-snackbar';
-    ```
+   ```js
+   import Snackbar from "react-native-snackbar";
+   ```
 
 ## Usage
 
@@ -63,15 +67,18 @@ Snackbar.show({
 
 Shows a Snackbar, dismissing any existing Snackbar first. Accepts an object with the following options:
 
-| Key | Data type | Default value? | Description |
-|-----|-----------|----------------|-------------|
-| `text` | `string` | Required. | The message to show. |
-| `duration` | See below | `Snackbar.LENGTH_SHORT` | How long to display the Snackbar. |
-| `textColor` | `string` or `style` | `'white'` | The color of the message text. |
-| `backgroundColor` | `string` or `style` | `undefined` (dark gray) | The background color for the whole Snackbar. |
-| `fontFamily` | `string` | `undefined` | [Android only] The basename of a `.ttf` font from `assets/fonts/` (see [setup guide](https://github.com/facebook/react-native/issues/25852) and [example app](/example), remember to `react-native link` after). |
-| `rtl` | `boolean` | `false` | [Android only, API 17+] Whether the Snackbar should render right-to-left (requires `android:supportsRtl="true"`, see [setup guide](https://android-developers.googleblog.com/2013/03/native-rtl-support-in-android-42.html) and [example app](/example)). |
-| `action` | `object` (described below) | `undefined` (no button) | Optional config for the action button (described below). |
+| Key               | Data type                  | Default value?          | Description                                                                                                                                                                                                                                               |
+| ----------------- | -------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text`            | `string`                   | Required.               | The message to show.                                                                                                                                                                                                                                      |
+| `duration`        | See below                  | `Snackbar.LENGTH_SHORT` | How long to display the Snackbar.                                                                                                                                                                                                                         |
+| `textColor`       | `string` or `style`        | `'white'`               | The color of the message text.                                                                                                                                                                                                                            |
+| `backgroundColor` | `string` or `style`        | `undefined` (dark gray) | The background color for the whole Snackbar.                                                                                                                                                                                                              |
+| `fontFamily`      | `string`                   | `undefined`             | [Android only] The basename of a `.ttf` font from `assets/fonts/` (see [setup guide](https://github.com/facebook/react-native/issues/25852) and [example app](/example), remember to `react-native link` after).                                          |
+| `rtl`             | `boolean`                  | `false`                 | [Android only, API 17+] Whether the Snackbar should render right-to-left (requires `android:supportsRtl="true"`, see [setup guide](https://android-developers.googleblog.com/2013/03/native-rtl-support-in-android-42.html) and [example app](/example)). |
+| `action`          | `object` (described below) | `undefined` (no button) | Optional config for the action button (described below).                                                                                                                                                                                                  |
+| `left`            | number                     | 0                       | Margin left                                                                                                                                                                                                                                               |
+| `right`           | number                     | 0                       | Margin right                                                                                                                                                                                                                                              |
+| `bottom`          | number                     | 0                       | Margin bottom                                                                                                                                                                                                                                             |
 
 Where `duration` can be one of the following (timing may vary based on device):
 
@@ -83,11 +90,11 @@ Note: the `text` will ellipsize after 2 lines of text on most platforms. See [#1
 
 The optional `action` object can contain the following options:
 
-| Key | Data type | Default value? | Description |
-|-----|-----------|----------------|-------------|
-| `text` | `string` | Required. | The button text. |
-| `textColor` | `string` or `style` | `'white'` | The color of the button text. |
-| `onPress` | `function` | `undefined` (Snackbar is simply dismissed) | A callback for when the user taps the button. |
+| Key         | Data type           | Default value?                             | Description                                   |
+| ----------- | ------------------- | ------------------------------------------ | --------------------------------------------- |
+| `text`      | `string`            | Required.                                  | The button text.                              |
+| `textColor` | `string` or `style` | `'white'`                                  | The color of the button text.                 |
+| `onPress`   | `function`          | `undefined` (Snackbar is simply dismissed) | A callback for when the user taps the button. |
 
 Deprecation note: The old keys `title` and `color` have been replaced by `text` and `textColor` for consistency.
 The old keys will continue to work for now but are deprecated and may be removed at any time.
